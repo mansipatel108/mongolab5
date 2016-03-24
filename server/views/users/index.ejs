@@ -14,7 +14,13 @@
                 <br />
                 <%= users[i].password %>
                 <br />
+                <%= users[i].email %>
+                <br />
+                <%= users[i].displayName %>
+                <br />
                 <%= users[i].created.toDateString() %>
+                <br />
+                <%= users[i].updated.toDateString() %>
             </li>
         <% } %>
     </ul>

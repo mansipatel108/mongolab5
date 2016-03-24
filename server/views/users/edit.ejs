@@ -10,7 +10,15 @@
         </fieldset>
         <fieldset class="form-group">
             <label for="password" class="col-sm-2">Password: *</label>
-            <textarea name="password" required><%= user.password %></textarea>
+            <input name="password" required><%= user.password %></textarea>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="email" class="col-sm-2">Email: *</label>
+            <input name="email" required value="<%= user.email %>" />
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="displayName" class="col-sm-2">Display Name: *</label>
+            <input name="text" required value="<%= user.displayName %>" />
         </fieldset>
         <button type="submit" class="col-sm-offset-2 btn btn-success">Submit</button>
 
