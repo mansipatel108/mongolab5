@@ -1,11 +1,11 @@
 // Type definitions for Passport v0.2.0
 // Project: http://passportjs.org
 // Definitions by: Horiuchi_H <https://github.com/horiuchi/>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 /// <reference path="../express/express.d.ts" />
 
-declare namespace Express {
+declare module Express {
     export interface Request {
         authInfo?: any;
 

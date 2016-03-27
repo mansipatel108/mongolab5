@@ -5,9 +5,7 @@ import path = require('path');
 var favicon = require('serve-favicon');
 import logger = require('morgan');
 import cookieParser = require('cookie-parser');
-
 import bodyParser = require('body-parser');
-
 // add mongoose
 import mongoose = require('mongoose');
 
@@ -28,31 +26,15 @@ import * as objects from './objects/customerror';
 import CustomError = objects.CustomError;
 var myerror = new CustomError();
 
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
 
 var app = express();
 
-// connect to mongodb with mongoose
-
-// local mongodb connection
-//mongoose.connect('mongodb://localhost/comp2068-mongodemo');
-
-mongoose.connect('mongodb://lab5:lab5@ds064628.mlab.com:64628/lab5');
-
-// check connection
-var db: mongoose.Connection = mongoose.connection;
-db.on('error', console.error.bind(console, 'Connection Error: '));
-db.once('open', function(callback) {
-    console.log('Connected to mongoLab');
-});
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -60,7 +42,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 // Initialize Session
 app.use(session({
     secret: 'someSecret',
@@ -77,13 +58,10 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, '../public')));
 
 // passport config
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(User.createStrategy());
+//passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-app.use('/', routes);
-app.use('/users', users);
-app.use('/articles', articles);
 
 // Route Definitions
 app.use('/', routes);
@@ -100,7 +78,6 @@ db.on('error', console.error.bind(console, 'Connection Error: '));
 db.once('open', function(callback) {
     console.log('Connected to mongoLab');
 });
-
 
 
 // catch 404 and forward to error handler
@@ -126,7 +103,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((error: CustomError, req: express.Request, res: express.Response, next: any) =>{
+app.use((error: CustomError, req: express.Request, res: express.Response, next: any) => {
     res.status(error.status || 500);
     res.render('error', {
         message: error.message,

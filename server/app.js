@@ -15,8 +15,6 @@ var session = require('express-session');
 // flash messages
 var flash = require('connect-flash');
 var passport = require('passport');
-var passportLocal = require('passport-local');
-var LocalStrategy = passportLocal.Strategy;
 // import objects namespace
 var objects = require('./objects/customerror');
 var CustomError = objects.CustomError;
@@ -25,16 +23,6 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
 var app = express();
-// connect to mongodb with mongoose
-// local mongodb connection
-//mongoose.connect('mongodb://localhost/comp2068-mongodemo');
-mongoose.connect('mongodb://lab5:lab5@ds064628.mlab.com:64628/lab5');
-// check connection
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Connection Error: '));
-db.once('open', function (callback) {
-    console.log('Connected to mongoLab');
-});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -56,12 +44,10 @@ app.use(passport.session());
 app.use(flash());
 app.use(express.static(path.join(__dirname, '../public')));
 // passport config
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(User.createStrategy());
+//passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use('/', routes);
-app.use('/users', users);
-app.use('/articles', articles);
 // Route Definitions
 app.use('/', routes);
 app.use('/users', users);

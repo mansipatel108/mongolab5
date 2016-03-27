@@ -38,8 +38,7 @@ gulp.task('develop', function () {
           , ext: 'html ts css ejs'
           , tasks: ['transpile'] })
     .on('restart', function () {
-        gulp.src('./server.js')
-        .pipe(livereload());
+        gulp.src('./server.js');
         gutil.log('restarted!');
     });
 });

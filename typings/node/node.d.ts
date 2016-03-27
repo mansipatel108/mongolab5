@@ -1,7 +1,7 @@
 // Type definitions for Node.js v4.x
 // Project: http://nodejs.org/
-// Definitions by: Microsoft TypeScript <http://typescriptlang.org>, DefinitelyTyped <https://github.com/DefinitelyTyped/DefinitelyTyped>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// Definitions by: Microsoft TypeScript <http://typescriptlang.org>, DefinitelyTyped <https://github.com/borisyankov/DefinitelyTyped>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 /************************************************
 *                                               *
@@ -165,7 +165,7 @@ declare var Buffer: {
 *               GLOBAL INTERFACES               *
 *                                               *
 ************************************************/
-declare namespace NodeJS {
+declare module NodeJS {
     export interface ErrnoException extends Error {
         errno?: number;
         code?: string;
@@ -552,11 +552,6 @@ declare module "http" {
         setTimeout(timeout: number, callback?: Function): void;
         setNoDelay(noDelay?: boolean): void;
         setSocketKeepAlive(enable?: boolean, initialDelay?: number): void;
-
-        setHeader(name: string, value: string | string[]): void;
-        getHeader(name: string): string;
-        removeHeader(name: string): void;
-        addTrailers(headers: any): void;
 
         // Extended base methods
         end(): void;
@@ -1830,7 +1825,7 @@ declare module "crypto" {
     }
     export function createCipher(algorithm: string, password: any): Cipher;
     export function createCipheriv(algorithm: string, key: any, iv: any): Cipher;
-    export interface Cipher extends NodeJS.ReadWriteStream {
+    export interface Cipher {
         update(data: Buffer): Buffer;
         update(data: string, input_encoding: "utf8"|"ascii"|"binary"): Buffer;
         update(data: Buffer, input_encoding: any, output_encoding: "binary"|"base64"|"hex"): string;
@@ -1842,7 +1837,7 @@ declare module "crypto" {
     }
     export function createDecipher(algorithm: string, password: any): Decipher;
     export function createDecipheriv(algorithm: string, key: any, iv: any): Decipher;
-    export interface Decipher extends NodeJS.ReadWriteStream {
+    export interface Decipher {
         update(data: Buffer): Buffer;
         update(data: string, input_encoding: "binary"|"base64"|"hex"): Buffer;
         update(data: Buffer, input_encoding: any, output_encoding: "utf8"|"ascii"|"binary"): string;
@@ -2011,7 +2006,7 @@ declare module "util" {
 
 declare module "assert" {
     function internal (value: any, message?: string): void;
-    namespace internal {
+    module internal {
         export class AssertionError implements Error {
             name: string;
             message: string;
