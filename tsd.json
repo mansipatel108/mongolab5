@@ -6,16 +6,16 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "express/express.d.ts": {
-      "commit": "44c9273e1e92bc95368f599d1dcda9f560a68956"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "node/node.d.ts": {
-      "commit": "9c2dd05cb4d773849de6f2a9de822e10f6229de8"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "mime/mime.d.ts": {
-      "commit": "44c9273e1e92bc95368f599d1dcda9f560a68956"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "44c9273e1e92bc95368f599d1dcda9f560a68956"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "orchestrator/orchestrator.d.ts": {
       "commit": "44c9273e1e92bc95368f599d1dcda9f560a68956"
@@ -64,6 +64,15 @@
     },
     "mongoose/mongoose.d.ts": {
       "commit": "9c2dd05cb4d773849de6f2a9de822e10f6229de8"
+    },
+    "passport-local/passport-local.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "passport/passport.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "express-serve-static-core/express-serve-static-core.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     }
   }
 }

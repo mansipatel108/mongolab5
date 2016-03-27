@@ -6,12 +6,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// add mongoose
+var mongoose = require('mongoose');
+// User
+var userModel = require('./models/user');
+var User = userModel.User;
+var session = require('express-session');
+// flash messages
+var flash = require('connect-flash');
+var passport = require('passport');
+var passportLocal = require('passport-local');
+var LocalStrategy = passportLocal.Strategy;
 // import objects namespace
 var objects = require('./objects/customerror');
 var CustomError = objects.CustomError;
 var myerror = new CustomError();
-// add mongoose
-var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
@@ -35,10 +44,37 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+// Initialize Session
+app.use(session({
+    secret: 'someSecret',
+    saveUninitialized: false,
+    resave: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+// Initialize Flash Messages
+app.use(flash());
 app.use(express.static(path.join(__dirname, '../public')));
+// passport config
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/articles', articles);
+// Route Definitions
+app.use('/', routes);
+app.use('/users', users);
+app.use('/articles', articles);
+// connect to mongodb with mongoose
+var DB = require('./config/db');
+mongoose.connect(DB.url);
+// check connection
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Connection Error: '));
+db.once('open', function (callback) {
+    console.log('Connected to mongoLab');
+});
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var error = new CustomError('Not Found');

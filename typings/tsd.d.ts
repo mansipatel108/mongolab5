@@ -18,3 +18,6 @@
 /// <reference path="gulp-sourcemaps/gulp-sourcemaps.d.ts" />
 /// <reference path="gulp-nodemon/gulp-nodemon.d.ts" />
 /// <reference path="mongoose/mongoose.d.ts" />
+/// <reference path="express-serve-static-core/express-serve-static-core.d.ts" />
+/// <reference path="passport-local/passport-local.d.ts" />
+/// <reference path="passport/passport.d.ts" />

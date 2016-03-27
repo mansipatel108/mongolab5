@@ -8,13 +8,26 @@ import cookieParser = require('cookie-parser');
 
 import bodyParser = require('body-parser');
 
+// add mongoose
+import mongoose = require('mongoose');
+
+// User
+import userModel = require('./models/user');
+
+import User = userModel.User;
+
+import session = require('express-session');
+// flash messages
+import flash = require('connect-flash');
+import passport = require('passport');
+import passportLocal = require('passport-local');
+import LocalStrategy = passportLocal.Strategy;
+
 // import objects namespace
 import * as objects from './objects/customerror';
 import CustomError = objects.CustomError;
 var myerror = new CustomError();
 
-// add mongoose
-import mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -47,11 +60,47 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Initialize Session
+app.use(session({
+    secret: 'someSecret',
+    saveUninitialized: false,
+    resave: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Initialize Flash Messages
+app.use(flash());
+
 app.use(express.static(path.join(__dirname, '../public')));
+
+// passport config
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/articles', articles);
+
+// Route Definitions
+app.use('/', routes);
+app.use('/users', users);
+app.use('/articles', articles);
+
+// connect to mongodb with mongoose
+var DB = require('./config/db');
+mongoose.connect(DB.url);
+
+// check connection
+var db: mongoose.Connection = mongoose.connection;
+db.on('error', console.error.bind(console, 'Connection Error: '));
+db.once('open', function(callback) {
+    console.log('Connected to mongoLab');
+});
+
 
 
 // catch 404 and forward to error handler
