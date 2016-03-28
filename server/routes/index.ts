@@ -1,5 +1,5 @@
 import express = require('express');
-var sendgrid = require('sendgrid')('mansipatel108', 'mansipatel1996');
+var sendgrid = require('sendgrid')('Username', 'Password');
 import passport = require('passport');
 var router = express.Router();
 
